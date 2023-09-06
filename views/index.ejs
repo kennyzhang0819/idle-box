@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idle Box Opener</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="game-container">
+
+        <!-- Inventory Column -->
+        <div class="inventory-column">
+            <h2>Inventory</h2>
+            <ul id="inventoryList"></ul>
+        </div>
+
+        <!-- Vertical Separator -->
+        <div class="separator"></div>
+
+        
+
+        <!-- Main Game Column -->
+        <div class="main-column">
+            <h1>Idle Box Opener</h1>
+            <div class="coin-balance">
+                <p>Coins: <span id="coinCount">0</span></p>
+            </div>
+            <h3>Last Item Obtained:</h3>
+            <p id="lastItem">None</p>
+            <button id="openBox" onclick="openBox()">Open Box</button>
+            <button id="buyAutoOpener" onclick="buyAutoOpener()">Buy Auto Opener (Cost: 10 coins)</button>
+        </div>
+
+        <!-- Vertical Separator -->
+        <div class="separator"></div>
+
+        <!-- Placeholder for Right Column -->
+        <div class="right-column">
+            <!-- Future content goes here -->
+        </div>
+
+        <!-- Selling Section -->
+        <div class="selling-section">
+            <h2>Sell Items</h2>
+            <select id="itemToSell">
+                <!-- Items will be dynamically populated here -->
+            </select>
+            <input type="number" id="sellQuantity" value="1" min="1">
+            <button onclick="sellSelectedItem()">Sell</button>
+        </div>
+    </div>
+
+    <script src="/js/data.js"></script>
+    <script src="/js/inventory.js"></script>
+    <script src="/js/shop.js"></script>
+    <script src="/js/main.js"></script>
+
+</body>
+</html>
