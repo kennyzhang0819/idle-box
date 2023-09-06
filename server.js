@@ -63,7 +63,7 @@ app.get('/inventory', async (req, res) => {
 
 async function getRandomItemFromDB() {
     try {
-        const items = await Item.find();  // Fetch all items from the database
+        const items = await Item.find();
 
         // Calculate the total sum of probabilities for normalization
         const totalProbability = items.reduce((sum, item) => sum + item.probability, 0);
