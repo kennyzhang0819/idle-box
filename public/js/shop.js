@@ -4,8 +4,13 @@ const autoOpenerCost = 10;
 let lastItem = null;
 
 function openBox() {
+    console.log("Opening box...");
     fetch('/inventory/open-box', {
-        method: 'POST'
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userId: currentUserId })
     })
     .then(response => response.json())
     .then(data => {

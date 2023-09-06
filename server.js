@@ -6,6 +6,8 @@ const PORT = 3000;
 
 const Item = require('./models/itemSchema');
 const Inventory = require('./models/inventorySchema');
+const User = require('./models/userSchema');
+const bcrypt = require('bcryptjs');
 
 // Connect to MongoDB
 mongoose.connect('mongodb://0.0.0.0:27017/idleBoxOpener', {
@@ -26,6 +28,39 @@ app.get('/', (req, res) => {
 });
 
 // API Endpoints
+// User registration endpoint
+app.post('/register', async (req, res) => {
+    const { username, password } = req.body;
+
+    // Check if user already exists
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+        return res.status(400).json({ message: 'Username already exists.' });
+    }
+
+    const user = new User({ username, password });
+    await user.save();
+
+    res.status(201).json({ message: 'User registered successfully.' });
+});
+
+// User login endpoint
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    const user = await User.findOne({ username });
+    if (!user) {
+        return res.status(400).json({ message: 'Invalid username or password.' });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+        return res.status(400).json({ message: 'Invalid username or password.' });
+    }
+
+    res.status(200).json({ message: 'Logged in successfully.', userId: user._id });
+});
+
 app.get('/items', async (req, res) => {
     try {
         const items = await Item.find();
@@ -52,7 +87,23 @@ app.post('/items', async (req, res) => {
     }
 });
 
-app.get('/inventory', async (req, res) => {
+async function checkUserExists(req, res, next) {
+    const userId = req.body.userId;
+    
+    if (!userId) {
+        return res.status(400).json({ message: 'User ID not provided.' });
+    }
+
+    const user = await User.findById(userId);
+
+    if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+    }
+    next();
+}
+
+
+app.post('/inventory', checkUserExists, async (req, res) => {
     try {
         const inventory = await Inventory.find().populate('itemId');
         res.json(inventory);
@@ -61,18 +112,15 @@ app.get('/inventory', async (req, res) => {
     }
 });
 
+
 async function getRandomItemFromDB() {
     try {
         const items = await Item.find();
 
-        // Calculate the total sum of probabilities for normalization
         const totalProbability = items.reduce((sum, item) => sum + item.probability, 0);
-
-        // Get a random number between 0 and totalProbability
         const randomNumber = Math.random() * totalProbability;
         let cumulativeProbability = 0;
 
-        // Find the item
         for (const item of items) {
             cumulativeProbability += item.probability;
             if (randomNumber <= cumulativeProbability) {
@@ -89,7 +137,7 @@ async function getRandomItemFromDB() {
 }
 
 
-app.post('/inventory/open-box', async (req, res) => {
+app.post('/inventory/open-box', checkUserExists, async (req, res) => {
     try {
         const randomItem = await getRandomItemFromDB();
 
@@ -112,7 +160,7 @@ app.post('/inventory/open-box', async (req, res) => {
     }
 });
 
-app.post('/inventory/sell', async (req, res) => {
+app.post('/inventory/sell', checkUserExists, async (req, res) => {
     const itemId = req.body.itemId;
     const quantityToSell = req.body.quantity;
 
@@ -124,7 +172,6 @@ app.post('/inventory/sell', async (req, res) => {
             return;
         }
 
-        // Subtract quantity or remove the item if quantity becomes zero
         inventoryItem.quantity -= quantityToSell;
         if (inventoryItem.quantity === 0) {
             await Inventory.deleteOne({ _id: inventoryItem._id });

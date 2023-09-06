@@ -8,6 +8,24 @@
 </head>
 <body>
     <div class="game-container">
+        <!-- Login Form -->
+        <div id="loginForm">
+            <h2>Login</h2>
+            <input type="text" id="loginUsername" placeholder="Username">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="login()">Login</button>
+        </div>
+
+        <!-- Register Form -->
+        <div id="registerForm">
+            <h2>Register</h2>
+            <input type="text" id="registerUsername" placeholder="Username">
+            <input type="password" id="registerPassword" placeholder="Password">
+            <button onclick="register()">Register</button>
+        </div>
+
+        <!-- Vertical Separator -->
+        <div class="separator"></div>
 
         <!-- Inventory Column -->
         <div class="inventory-column">
@@ -17,8 +35,6 @@
 
         <!-- Vertical Separator -->
         <div class="separator"></div>
-
-        
 
         <!-- Main Game Column -->
         <div class="main-column">
@@ -51,7 +67,6 @@
         </div>
     </div>
 
-    <script src="/js/data.js"></script>
     <script src="/js/selling.js"></script>
     <script src="/js/shop.js"></script>
     <script src="/js/main.js"></script>

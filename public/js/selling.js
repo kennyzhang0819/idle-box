@@ -1,5 +1,4 @@
 async function sellSelectedItem() {
-    // Fetch the items from the /items endpoint
     let possibleItems;
     try {
         const response = await fetch('/items');
@@ -25,7 +24,7 @@ async function sellSelectedItem() {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ itemId: itemToSell._id, quantity: quantityToSell })
+        body: JSON.stringify({ userId: currentUserId, itemId: itemToSell._id, quantity: quantityToSell })
     })
     .then(response => {
         if (!response.ok) {
