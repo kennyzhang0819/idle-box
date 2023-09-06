@@ -13,8 +13,20 @@ body {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 100vh; /* This will make the game container take up the entire viewport height */
-    flex-direction: row; /* This will layout children horizontally */
+    height: 100vh;
+    flex-direction: row;
+}
+
+/* New styles for auth-container */
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+#loginForm, #registerForm {
+    margin-bottom: 20px;
 }
 
 .inventory-column, .selling-section {

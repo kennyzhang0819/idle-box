@@ -7,21 +7,26 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+    
     <div class="game-container">
-        <!-- Login Form -->
-        <div id="loginForm">
-            <h2>Login</h2>
-            <input type="text" id="loginUsername" placeholder="Username">
-            <input type="password" id="loginPassword" placeholder="Password">
-            <button onclick="login()">Login</button>
-        </div>
+        <!-- New container for Login and Register Forms -->
+        <div class="auth-container">
+            <h1>Idle Box Opener</h1>
+            <!-- Login Form -->
+            <div id="loginForm">
+                <h2>Login</h2>
+                <input type="text" id="loginUsername" placeholder="Username">
+                <input type="password" id="loginPassword" placeholder="Password">
+                <button onclick="login()">Login</button>
+            </div>
 
-        <!-- Register Form -->
-        <div id="registerForm">
-            <h2>Register</h2>
-            <input type="text" id="registerUsername" placeholder="Username">
-            <input type="password" id="registerPassword" placeholder="Password">
-            <button onclick="register()">Register</button>
+            <!-- Register Form -->
+            <div id="registerForm">
+                <h2>Register</h2>
+                <input type="text" id="registerUsername" placeholder="Username">
+                <input type="password" id="registerPassword" placeholder="Password">
+                <button onclick="register()">Register</button>
+            </div>
         </div>
 
         <!-- Vertical Separator -->
@@ -38,7 +43,7 @@
 
         <!-- Main Game Column -->
         <div class="main-column">
-            <h1>Idle Box Opener</h1>
+            <h1>Boxes</h1>
             <div class="coin-balance">
                 <p>Coins: <span id="coinCount">0</span></p>
             </div>
